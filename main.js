@@ -16,13 +16,19 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 //#endregion 
 
 // Modules
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow} = require('electron') 
 const windowStateKeeper = require('electron-window-state')
 
 //Remove for production
 // Enable live reload for all the files inside your project directory e.g. html css js
-//const path = require('path')
-require('electron-reload')(__dirname);
+const path = require('path')
+
+//require('electron-reload')(__dirname);
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron.cmd')
+})
+
+//console.log(path.join(process.cwd(), 'node_modules', '.bin', 'electron.cmd') )
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -54,7 +60,7 @@ function createWindow () {
     show: false
   })
 
-  //mainWindow.setIcon('./build/icon.png'); //also doesn't work on build
+  //mainWindow.setIcon('build/icon.png'); //also doesn't work on build
 
   winState.manage(mainWindow)
 

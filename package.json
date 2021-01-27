@@ -1,5 +1,5 @@
 {
-  "name": "Timer",
+  "name": "timer",
   "version": "0.0.1",
   "description": "Timer for meetings etc",
   "main": "main.js",
