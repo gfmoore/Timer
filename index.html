@@ -1,0 +1,66 @@
+<!--
+Program       timer.html
+Author        Gordon Moore
+Date          23 January 2021
+Description   The JavaScript code for timer (in electron)
+Licence       GNU General Public Licence Version 3, 29 June 2007
+-->
+
+<!--
+0.0.1   Initial version
+1.0.0   25 January 2021 Version 1
+1.0.1   27 January 2021 Make resizable
+
+--> 
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <!-- <meta http-equiv="refresh" content="1" > -->
+    <title>Timer</title>
+
+    <!-- stylesheets -->
+    <link href=./css/font-awesome-5.0.6/css/fontawesome-all.min.css rel=stylesheet type=text/css>
+    <link href=./css/timer.css rel=stylesheet type=text/css>
+
+    <!-- scripts -->
+    <script defer>require('./js/timer.js');</script>
+
+  </head>
+  <body> 
+    <div id=main>
+
+      <div id=displaysection>
+        <div id=timer></div>
+        <div id=stopwatch hidden></div>
+      </div>
+
+      <!-- <div id=spacer></div> -->
+
+      <div id=controlssection>
+        <div id=periods>
+          <div id=fixedtimes>
+            <div id=p05 class=periodbuttons>5</div>
+            <div id=p10 class=periodbuttons>10</div>
+            <div id=p15 class=periodbuttons>15</div>
+            <div id=p30 class=periodbuttons>30</div>
+            <div id=p60 class=periodbuttons>60</div>
+            <div id=pc  class=periodbuttons>C</div>
+          </div>  
+          <input type=text id=customtime value='0:00:00' hidden>
+        </div>
+
+        <div id=controls>
+          <div id=start class=controlbuttons><i id=starticon class="fas fa-play"></i></div>
+          <div id=reset class=controlbuttons><i id=reseticon class="fas fa-sync"></i></div>
+          <div id=spacercontrols></div>
+          <div id=mode  class=controlbuttons><i id=modeicon  class="fas fa-stopwatch"></i></div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

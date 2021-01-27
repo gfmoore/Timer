@@ -1,4 +1,3 @@
 # Timer
-An electron timer for items at meetings
 
-by Gordon moore
+Timer program for meeting items, includes stopwatch.
