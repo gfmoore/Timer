@@ -18,6 +18,8 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 
 let version = '1.0.1';
 
+
+
 window.$ = window.jQuery = require('jquery');
 let d3 = require('d3');
 

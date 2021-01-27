@@ -28,7 +28,7 @@
     "appId": "uk.co.gordonmoore.timer",
     "copyright": "Copyright Gordon Moore 2021",
     "win": {
-      "category": ""
+      "target": "dir"
     }
   }
 }

@@ -50,9 +50,11 @@ function createWindow () {
     minimizable: false,
     maximisable: false,
     opacity: 0.8,
-    // icon: 'favicon.ico', 
+    // icon: './images/timer.ico',  doesn't work when built!!! try setIcon below 
     show: false
   })
+
+  //mainWindow.setIcon('./build/icon.png'); //also doesn't work on build
 
   winState.manage(mainWindow)
 
