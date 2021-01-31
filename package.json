@@ -1,6 +1,7 @@
 {
   "name": "timer",
-  "version": "0.0.1",
+  "productName": "Timer",
+  "version": "1.0.1",
   "description": "Timer for meetings etc",
   "main": "main.js",
   "scripts": {
@@ -28,7 +29,11 @@
     "appId": "uk.co.gordonmoore.timer",
     "copyright": "Copyright Gordon Moore 2021",
     "win": {
-      "target": "dir"
+      "target": [
+        "dir"
+      ]
     }
   }
 }
+
+

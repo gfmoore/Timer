@@ -55,24 +55,31 @@ body {
   user-select: none;
 }
 
+#clock {
+  border: 1px solid purple;
+  background-color: #dcd0ff;  /*palelavender;*/
+  user-select: none;
+}
+
 /*---------------------controls--------------------*/
 #fixedtimes {
   display: grid;
-  grid-template-columns: 2.4rem 2.4rem 2.4rem 2.4rem 2.4rem auto;
+  grid-template-columns: 1.5rem 1.5rem 1.5rem 1.5rem 1.5rem auto;
   margin-top: 0.5rem;
-  margin-left: 0.1rem;
+  margin-left: 0.0rem;
   user-select: none;
   -webkit-app-region: no-drag;
 }
 
 .periodbuttons {
   background-color: lightgrey;
-  width: 2rem;
-  height: 1.3rem;
+  font-size: 0.8rem;
+  width: 1.2rem;
+  height: 1.0rem;
   border: 1px solid grey;
   border-radius: 0.5rem;
   text-align: center;
-  padding-top: 0.2rem;
+  padding-top: 0.1rem;
   user-select: none;
 }
 
@@ -82,7 +89,7 @@ body {
   background-color: lightyellow;
   font-size: 1.5rem;
   position: absolute;
-  left: 5.0rem;
+  left: 4.5rem;
   top: 8rem;
   width: 7rem;
   height: 2.0rem;
@@ -93,23 +100,28 @@ body {
 
 #controls {
   display: grid;
-  grid-template-columns: 3.5rem 3.5rem 3.5rem 1fr;
-  margin-top: 0.8rem;
-  margin-left: 0.1rem;
+  grid-template-columns: 2.5rem 2.0rem 2.5rem 2.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.0rem;
   user-select: none;
   -webkit-app-region: no-drag;
 }
 
 .controlbuttons {
   background-color: palegreen;
-  width: 3rem;
-  height: 1.5rem;
+  font-size: 1rem;
+  width: 2rem;
+  height: 1.2rem;
   border: 1px solid grey;
   border-radius: 0.5rem;
   text-align: center;
-  padding-top: 0.5rem;
+  padding-top: 0.1rem;
 }
 
 #mode {
   background-color: moccasin; 
 }
+
+/* * {
+  transform: scale(1.0, 1.0)
+  } */

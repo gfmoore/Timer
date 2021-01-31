@@ -54,15 +54,13 @@ function createWindow () {
     alwaysOnTop: true,
     resizable: true,
     minimizable: false,
-    maximisable: false,
-    opacity: 0.8,
-    // icon: './images/timer.ico',  doesn't work when built!!! try setIcon below 
+    maximizable: false,
+    opacity: 0.6,
+    icon: __dirname + '/build/icon.png',  
     show: false
   })
 
-  //mainWindow.setIcon('build/icon.png'); //also doesn't work on build
-
-  winState.manage(mainWindow) 
+  winState.manage(mainWindow)
 
   // Load index.html into the new BrowserWindow
   mainWindow.loadFile('index.html')
@@ -76,6 +74,7 @@ function createWindow () {
   mainWindow.on('closed',  () => {
     mainWindow = null
   }) 
+
 }
 
 // Electron `app` is ready

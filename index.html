@@ -36,11 +36,20 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
       <div id=displaysection>
         <div id=timer></div>
         <div id=stopwatch hidden></div>
+        <div id=clock hidden></div>
       </div>
 
       <!-- <div id=spacer></div> -->
 
       <div id=controlssection>
+
+        <div id=controls>
+          <div id=mode  class=controlbuttons><i id=modeicon  class="fas fa-stopwatch"></i></div>
+          <div id=spacercontrols></div>
+          <div id=start class=controlbuttons><i id=starticon class="fas fa-play"></i></div>
+          <div id=reset class=controlbuttons><i id=reseticon class="fas fa-sync"></i></div>
+        </div>
+
         <div id=periods>
           <div id=fixedtimes>
             <div id=p05 class=periodbuttons>5</div>
@@ -53,14 +62,11 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
           <input type=text id=customtime value='0:00:00' hidden>
         </div>
 
-        <div id=controls>
-          <div id=start class=controlbuttons><i id=starticon class="fas fa-play"></i></div>
-          <div id=reset class=controlbuttons><i id=reseticon class="fas fa-sync"></i></div>
-          <div id=spacercontrols></div>
-          <div id=mode  class=controlbuttons><i id=modeicon  class="fas fa-stopwatch"></i></div>
-        </div>
       </div>
 
     </div>
+
+    <!-- <button id=clickme>Zoom</button> -->
+
   </body>
 </html>

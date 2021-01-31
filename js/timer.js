@@ -11,7 +11,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 0.0.1   Initial version
 1.0.0   25 January 2021 Version 1
 1.0.1   27 January 2021 Make resizable
-1.1.0   28 January 2021 Add a clock.
+1.1.0   TODO January 2021 Add a clock.
 
 */
 //#endregion 
@@ -30,6 +30,7 @@ $(function() {
   //#region for variable definitions (just allows code folding)
   let svgT;
   let svgS;
+  let svgC;
   let period;
   let periodset;
   let margin;
@@ -53,6 +54,10 @@ $(function() {
   let index;
   let flashend;
   let flashon = true;
+  let currentdate;
+  let x2;
+  let y2;
+  let rot;
 
   //#endregion
 
@@ -61,6 +66,18 @@ $(function() {
 
   function initialise() {
 
+    period = 300;
+    periodset = 300;
+    upcount = 0;
+    flashon = true;
+    //initial period
+    $('#p05').css('background-color', 'palegreen');
+
+    redraw();
+
+  }
+
+  function redraw() {  //don't want anything to happen to selections or operations
     d3.selectAll('svg > *').remove();  //remove all elements under svg
     $('svg').remove(); 
     
@@ -73,6 +90,7 @@ $(function() {
     $('#displaysection').css('height', w );
     $('#timer').css('height', w );
     $('#stopwatch').css('height', w );
+    $('#clock').css('height', w );
     
     //just make w and h a tad smaller than window for UI look
     w = 0.98 * w;
@@ -82,27 +100,23 @@ $(function() {
     svgT = d3.select('#timer').append('svg').attr('height', '100%').attr('width', '100%');
     //stopwatch
     svgS = d3.select('#stopwatch').append('svg').attr('height', '100%').attr('width', '100%');
+    //clock
+    svgC = d3.select('#clock').append('svg').attr('height', '100%').attr('width', '100%');
 
     $('#timer').css('height', h);
     $('#stopwatch').css('height', h);
 
     //h = ($('#timer').outerHeight(false) - margin.top - margin.bottom);
-    // x = d3.scaleLinear().domain([-1, 1]).range([0, widthT]);
-    // y = d3.scaleLinear().domain([-1, 1]).range([heightT, 0]);
+    //for use with clock really
+    x = d3.scaleLinear().domain([-1, 1]).range([0, w]);
+    y = d3.scaleLinear().domain([-1, 1]).range([h, 0]);
     // r = d3.scaleLinear().domain([0,1]).range([0, widthT]);
 
     //add a circle
     svgT.append('circle').attr('class', 'start').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w / 2).attr('stroke', 'black').attr('stroke-width', '2').attr('fill', 'none');
 
-    //append some text
-    period = 300;
-    periodset = 300;
-    upcount = 0;
     displayTime();
     displayCountup();
-
-    //initial period
-    $('#p05').css('background-color', 'palegreen');
   }
 
   //start/pause button
@@ -153,6 +167,7 @@ $(function() {
     displayCountup();
   }
 
+  //display the timer
   function displayTime() {
 
     //if timer finished
@@ -228,6 +243,7 @@ $(function() {
     else                      svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 40).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '2.0rem').style('font-weight', 'bold');
   }
 
+  //display a flashing disc to indicate that time has run out
   function flash() {
     if (flashon) {
       svgT.append('circle').attr('class', 'start').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w /2).attr('stroke', 'black').attr('stroke-width', '2').attr('fill', 'red');
@@ -239,7 +255,7 @@ $(function() {
     }
   }
 
-
+  //the stopwatch
   function displayCountup() {
     //convert upcount to a time
     hrs = parseInt(upcount / 3600);
@@ -253,8 +269,9 @@ $(function() {
              
     timeS = `${hrs}:${min}:${sec}`;
     svgS.selectAll('.stopw').remove();
-    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -83).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '2.5rem').style('font-weight', 'bold');
+    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -65).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '2.0rem').style('font-weight', 'bold');
   }
+
 
   //reset button
   $('#reset').on('click', function() {
@@ -283,6 +300,7 @@ $(function() {
 
     //stop any flashing disc
     clearInterval(flashend);
+    flashon = true;
   }
 
   //periodbuttons change (act like radio buttons)
@@ -299,9 +317,10 @@ $(function() {
         $('#p05').css('background-color', 'palegreen');
         periodset = 300;
         period = 300;
+        //should I reset the entered time??
       }
       else {
-        $('#customtime').css('left', 0.5*w -50);
+        $('#customtime').css('left', 0.5*w -55);
         $('#customtime').css('top', 0.5*w - 10);
         $('#customtime').show();
       }
@@ -337,35 +356,92 @@ $(function() {
     }
   })
 
-  //change mode from timer to stopwatch
+  //change mode from timer to stopwatch to clock to timer ...
   $('#mode').on('click', function() {
 
-    if ( $('#mode').css('background-color') === 'rgb(255, 228, 181)' )  {  //watch spaces and format!!!
-      $('#mode').css('background-color', 'lightblue');
+    //if timer
+    if ( $('#mode').css('background-color') === 'rgb(255, 228, 181)' )  {  //moccasin watch spaces and format!!!
+      $('#mode').css('background-color', 'lightskyblue'); //light sky blue
       $('#modeicon').removeClass('fa-stopwatch');
-      $('#modeicon').addClass('fa-hourglass-half');
+      $('#modeicon').removeClass('fa-hourglass-half');
+      $('#modeicon').addClass('fa-clock');
       //hide all timer stuff enable all stopwatch
       $('#timer').hide();
       $('#stopwatch').show();
+      $('#clock').hide();
     }
+    //if stopwatch
+    else if ($('#mode').css('background-color') === 'rgb(135, 206, 250)' )  {  //light sky blue
+      $('#mode').css('background-color', '#dcd0ff');  
+      $('#modeicon').removeClass('fa-hourglass-half');
+      $('#modeicon').removeClass('fa-clock');
+      $('#modeicon').addClass('fa-hourglass-half');
+      //hide stopwatch enable timer
+      $('#timer').hide();
+      $('#stopwatch').hide();
+      $('#clock').show();
+
+      $('#periods').hide();
+      $('#start').hide();
+      $('#reset').hide();
+
+      clock = setInterval(displayClock, 1000);
+    }
+    //if clock
     else {
+      clearInterval(clock)
       $('#mode').css('background-color', 'moccasin');
+      $('#modeicon').removeClass('fa-clock-half');
       $('#modeicon').removeClass('fa-hourglass-half');
       $('#modeicon').addClass('fa-stopwatch');
       //hide stopwatch enable timer
       $('#timer').show();
       $('#stopwatch').hide();
+      $('#clock').hide();
+      $('#periods').show();
+      $('#start').show();
+      $('#reset').show();
     }
 
     reset();
   })
+
+  function displayClock() {
+    d3.selectAll('.clock').remove();
+    svgC.append('circle').attr('class', 'clock').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w / 2).attr('stroke', 'blue').attr('stroke-width', '2').attr('fill', 'none');
+
+    //get current time and get hrs min sec
+    currentDate = new Date();
+    hrs = currentDate.getHours();
+    min = currentDate.getMinutes(); 
+    sec = currentDate.getSeconds();
+
+    //sec
+    // rot = sec/60*2*Math.PI;
+    // x2 = x(Math.cos(rot) * 0.95*w/2);
+    // y2 = y(Math.sin(rot) * 0.95*h/2);
+    // svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'red').attr('stroke-width', 2)
+        
+    // //min
+    // rot = min/60*2*Math.PI;// + sec/3600*2*Math.PI;
+    // x2 = x(Math.cos(rot) * 0.85*w/2);
+    // y2 = y(Math.sin(rot) * 0.85*h/2);
+    // svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+
+    //hr
+    if (hrs > 12) hrs -= 12;
+    rot = hrs/12*2*Math.PI;// + sec/3600*2*Math.PI;
+    x2 = x(Math.cos(rot) * 0.6*w/2);
+    y2 = y(Math.sin(rot) * 0.6*h/2);
+    svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+  }
 
   /*---------------------------------------------------------  resize event -----------------------------------------------*/
   $(window).bind('resize', function(e){
     window.resizeEvt;
     $(window).resize(function(){
         clearTimeout(window.resizeEvt);
-        window.resizeEvt = setTimeout(function() { initialise(); }, 500);
+        window.resizeEvt = setTimeout(function() { redraw(); }, 500);
     });
   });
 
@@ -373,5 +449,9 @@ $(function() {
   function lg(s) {
     console.log(s);
   }  
+
+  // $('#clickme').on('click', function() {
+  //   $('*').css('transform', 'scale(1.5, 1.5)');
+  // })
 
 })
