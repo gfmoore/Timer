@@ -62,7 +62,7 @@ function createWindow () {
 
   //mainWindow.setIcon('build/icon.png'); //also doesn't work on build
 
-  winState.manage(mainWindow)
+  winState.manage(mainWindow) 
 
   // Load index.html into the new BrowserWindow
   mainWindow.loadFile('index.html')
