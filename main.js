@@ -12,6 +12,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.0.0   25 January 2021 Version 1
 1.0.1   27 January 2021 Make resizable and add proper build icon
 
+1.1.0   31 January 2021 Add a clock.
 */
 //#endregion 
 

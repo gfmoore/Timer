@@ -11,12 +11,13 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 0.0.1   Initial version
 1.0.0   25 January 2021 Version 1
 1.0.1   27 January 2021 Make resizable
-1.1.0   TODO January 2021 Add a clock.
+
+1.1.0   31 January 2021 Add a clock.
 
 */
 //#endregion 
 
-let version = '1.0.1';
+let version = '1.1.0';
 
 
 
@@ -55,6 +56,8 @@ $(function() {
   let flashend;
   let flashon = true;
   let currentdate;
+  let x1;
+  let y1;
   let x2;
   let y2;
   let rot;
@@ -74,7 +77,6 @@ $(function() {
     $('#p05').css('background-color', 'palegreen');
 
     redraw();
-
   }
 
   function redraw() {  //don't want anything to happen to selections or operations
@@ -352,7 +354,6 @@ $(function() {
       period = periodset;
 
       displayTime();
-
     }
   })
 
@@ -381,10 +382,12 @@ $(function() {
       $('#stopwatch').hide();
       $('#clock').show();
 
+
       $('#periods').hide();
       $('#start').hide();
       $('#reset').hide();
 
+      clockface();
       clock = setInterval(displayClock, 1000);
     }
     //if clock
@@ -407,8 +410,9 @@ $(function() {
   })
 
   function displayClock() {
-    d3.selectAll('.clock').remove();
-    svgC.append('circle').attr('class', 'clock').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w / 2).attr('stroke', 'blue').attr('stroke-width', '2').attr('fill', 'none');
+    clockface();
+
+    d3.selectAll('.hands').remove();
 
     //get current time and get hrs min sec
     currentDate = new Date();
@@ -416,24 +420,55 @@ $(function() {
     min = currentDate.getMinutes(); 
     sec = currentDate.getSeconds();
 
-    //sec
-    // rot = sec/60*2*Math.PI;
-    // x2 = x(Math.cos(rot) * 0.95*w/2);
-    // y2 = y(Math.sin(rot) * 0.95*h/2);
-    // svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'red').attr('stroke-width', 2)
-        
-    // //min
-    // rot = min/60*2*Math.PI;// + sec/3600*2*Math.PI;
-    // x2 = x(Math.cos(rot) * 0.85*w/2);
-    // y2 = y(Math.sin(rot) * 0.85*h/2);
-    // svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+    //hour hand
+    if (hrs >= 12) hrs -= 12;
+    rot = Math.PI/2 - (hrs/12 * 2*Math.PI) - (min/60 * 2*Math.PI/12);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.6);
+    y2 = y(Math.sin(rot) * 0.6);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
 
-    //hr
-    if (hrs > 12) hrs -= 12;
-    rot = hrs/12*2*Math.PI;// + sec/3600*2*Math.PI;
-    x2 = x(Math.cos(rot) * 0.6*w/2);
-    y2 = y(Math.sin(rot) * 0.6*h/2);
-    svgC.append('line').attr('class', 'clock').attr('x1', w/2).attr('y1', h/2).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+    //minute hand
+    rot = Math.PI/2 - (min/60 * 2*Math.PI) - (sec/60 * 2*Math.PI/60);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.80);
+    y2 = y(Math.sin(rot) * 0.80);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
+
+    //second hand
+    rot = Math.PI/2 - (sec/60 * 2*Math.PI);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.85);
+    y2 = y(Math.sin(rot) * 0.85);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'red').attr('stroke-width', 2);
+  
+    //centre pivot (repeat after drawings hands really)
+    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', 4).attr('stroke', 'blue').attr('stroke-width', '1').attr('fill', 'blue');
+  }
+
+  function clockface() {
+    d3.selectAll('.clock').remove();
+
+    //clock face
+    x1 = x(0);
+    y1 = y(0);
+    //outer circle rim
+    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', w/2).attr('stroke', 'blue').attr('stroke-width', '2').attr('fill', 'none');
+
+    //add clock face ticks
+    for (let i=0; i<12; i += 1) {
+      rot = Math.PI/2 - i/12 * 2*Math.PI;  //add pi/2 to get to vertical for zero degrees/radians
+
+      x1 = x(0.86 * Math.cos(rot));
+      y1 = y(0.86 * Math.sin(rot));
+      x2 = x(0.95 * Math.cos(rot));
+      y2 = y(0.95 * Math.sin(rot));
+      svgC.append('line').attr('class', 'clock').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+    }
+    
   }
 
   /*---------------------------------------------------------  resize event -----------------------------------------------*/
