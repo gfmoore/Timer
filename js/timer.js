@@ -13,11 +13,12 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.0.1   27 January 2021 Make resizable
 
 1.1.0   31 January 2021 Add a clock.
+1.1.1   4  February 2021 Add date to clock and make clock first
 
 */
 //#endregion 
 
-let version = '1.1.0';
+let version = '1.1.1';
 
 
 
@@ -61,6 +62,8 @@ $(function() {
   let x2;
   let y2;
   let rot;
+  let day;
+  let mon;
 
   //#endregion
 
@@ -68,7 +71,7 @@ $(function() {
   initialise();
 
   function initialise() {
-
+    
     period = 300;
     periodset = 300;
     upcount = 0;
@@ -77,6 +80,8 @@ $(function() {
     $('#p05').css('background-color', 'palegreen');
 
     redraw();
+    clock = setInterval(displayClock, 1000);
+    displayClock();
   }
 
   function redraw() {  //don't want anything to happen to selections or operations
@@ -116,9 +121,19 @@ $(function() {
 
     //add a circle
     svgT.append('circle').attr('class', 'start').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w / 2).attr('stroke', 'black').attr('stroke-width', '2').attr('fill', 'none');
+    
+    $('#timer').hide();
+    $('#stopwatch').hide();
+    $('#clock').show();
+    $('#periods').hide();
+    $('#start').hide();
+    $('#reset').hide();
+    $('#mode').css('background-color', '#dcd0ff'); 
 
+    displayClock();
     displayTime();
     displayCountup();
+
   }
 
   //start/pause button
@@ -382,13 +397,12 @@ $(function() {
       $('#stopwatch').hide();
       $('#clock').show();
 
-
       $('#periods').hide();
       $('#start').hide();
       $('#reset').hide();
 
-      clockface();
       clock = setInterval(displayClock, 1000);
+      clockface();
     }
     //if clock
     else {
@@ -419,6 +433,9 @@ $(function() {
     hrs = currentDate.getHours();
     min = currentDate.getMinutes(); 
     sec = currentDate.getSeconds();
+
+    day = currentDate.getDate();
+    mon = currentDate.getMonth() + 1;
 
     //hour hand
     if (hrs >= 12) hrs -= 12;
@@ -467,6 +484,10 @@ $(function() {
       x2 = x(0.95 * Math.cos(rot));
       y2 = y(0.95 * Math.sin(rot));
       svgC.append('line').attr('class', 'clock').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+
+      //add day and month
+      svgC.append('text').text(day + ' ' + monthName(mon)).attr('class', 'clock').attr('x', w/2 -25).attr('y', 0.7 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.2rem').style('font-weight', 'bold');
+
     }
     
   }
@@ -484,6 +505,23 @@ $(function() {
   function lg(s) {
     console.log(s);
   }  
+
+  function monthName(mon) {
+    if (mon === 1) return 'Jan';
+    if (mon === 2) return 'Feb';
+    if (mon === 3) return 'Mar';
+    if (mon === 4) return 'Apr';
+    if (mon === 5) return 'May';
+    if (mon === 6) return 'Jun';
+    if (mon === 7) return 'Jul';
+    if (mon === 8) return 'Aug';
+    if (mon === 9) return 'Sep';
+    if (mon === 10) return 'Oct';
+    if (mon === 11) return 'Nov';
+    if (mon === 12) return 'Dec';
+
+  } 
+
 
   // $('#clickme').on('click', function() {
   //   $('*').css('transform', 'scale(1.5, 1.5)');

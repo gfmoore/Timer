@@ -13,6 +13,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.0.1   27 January 2021 Make resizable and add proper build icon
 
 1.1.0   31 January 2021 Add a clock.
+1.1.1   4  February 2021 Add date to clock and make clock first
 */
 //#endregion 
 
@@ -40,7 +41,7 @@ function createWindow () {
 
   //so we can remember window state
   let winState = windowStateKeeper({
-    defaultWidth: 300, defaultHeight: 420
+    defaultWidth: 130, defaultHeight: 150
   })
 
   //Menu.setApplicationMenu(new Menu());
