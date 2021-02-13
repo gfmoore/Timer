@@ -14,13 +14,12 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 
 1.1.0   31 January 2021 Add a clock.
 1.1.1   4  February 2021 Add date to clock and make clock first
+1.1.2   13 February 2021 Do some more work on resizing.
 
 */
 //#endregion 
 
-let version = '1.1.1';
-
-
+let version = '1.1.2';
 
 window.$ = window.jQuery = require('jquery');
 let d3 = require('d3');
@@ -72,6 +71,9 @@ $(function() {
 
   function initialise() {
     
+    //disable scroll bars
+    $("body").css("overflow", "hidden");
+
     period = 300;
     periodset = 300;
     upcount = 0;
@@ -81,6 +83,15 @@ $(function() {
 
     redraw();
     clock = setInterval(displayClock, 1000);
+
+    $('#timer').hide();
+    $('#stopwatch').hide();
+    $('#clock').show();
+    $('#periods').hide();
+    $('#start').hide();
+    $('#reset').hide();
+    $('#mode').css('background-color', '#dcd0ff'); 
+
     displayClock();
   }
 
@@ -92,7 +103,9 @@ $(function() {
     margin = {top: 0, right: 0, bottom: 0, left: 0};
 
     w = ($('#main').outerWidth(true) - margin.left - margin.right); 
-    h = w;
+    h = w + 30;
+    $('#main').css('height', h);
+    
 
     $('#displaysection').css('height', w );
     $('#timer').css('height', w );
@@ -122,14 +135,6 @@ $(function() {
     //add a circle
     svgT.append('circle').attr('class', 'start').attr('cx', w/2).attr('cy', h/2).attr('r', 0.95 * w / 2).attr('stroke', 'black').attr('stroke-width', '2').attr('fill', 'none');
     
-    $('#timer').hide();
-    $('#stopwatch').hide();
-    $('#clock').show();
-    $('#periods').hide();
-    $('#start').hide();
-    $('#reset').hide();
-    $('#mode').css('background-color', '#dcd0ff'); 
-
     displayClock();
     displayTime();
     displayCountup();
@@ -286,7 +291,7 @@ $(function() {
              
     timeS = `${hrs}:${min}:${sec}`;
     svgS.selectAll('.stopw').remove();
-    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -65).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '2.0rem').style('font-weight', 'bold');
+    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -58).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.75rem').style('font-weight', 'bold');
   }
 
 

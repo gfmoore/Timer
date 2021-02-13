@@ -14,6 +14,8 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 
 1.1.0   31 January 2021 Add a clock.
 1.1.1   4  February 2021 Add date to clock and make clock first
+1.1.2   13 February 2021 Do some more work on resizing.
+
 */
 //#endregion 
 
