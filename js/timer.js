@@ -20,7 +20,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 */
 //#endregion 
 
-let version = '1.1.2';
+let version = '1.1.3';
 
 window.$ = window.jQuery = require('jquery');
 let d3 = require('d3');
