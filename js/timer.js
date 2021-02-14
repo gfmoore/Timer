@@ -15,6 +15,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.0   31 January 2021 Add a clock.
 1.1.1   4  February 2021 Add date to clock and make clock first
 1.1.2   13 February 2021 Do some more work on resizing.
+1.1.3   14 February 2021 Add version display
 
 */
 //#endregion 
@@ -73,6 +74,10 @@ $(function() {
     
     //disable scroll bars
     $("body").css("overflow", "hidden");
+
+    //version
+    $('#version').hide();
+    $('#version').text(version);
 
     period = 300;
     periodset = 300;
@@ -496,6 +501,16 @@ $(function() {
     }
     
   }
+
+  //function click
+  $('#main').on('click', function() {
+    if ($('#version').is(':visible')) {
+      $('#version').hide(); 
+    }
+    else {
+      $('#version').show();
+    }
+  })
 
   /*---------------------------------------------------------  resize event -----------------------------------------------*/
   $(window).bind('resize', function(e){
