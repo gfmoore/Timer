@@ -250,7 +250,7 @@ $(function() {
     .attr('transform', `translate(${w/2},${h/2})`)
     .attr("d", d3.arc()
       .innerRadius( 40 )
-      .outerRadius( 0.44 * w )
+      .outerRadius( 0.47 * w )
       .startAngle( startA )     // It's in radians, 
       .endAngle( 0 )       
       )
