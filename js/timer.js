@@ -103,8 +103,8 @@ $(function() {
     margin = {top: 0, right: 0, bottom: 0, left: 0};
 
     w = ($('#main').outerWidth(true) - margin.left - margin.right); 
-    h = w + 30;
-    $('#main').css('height', h);
+    
+    $('#main').css('height', w + 30);
     
 
     $('#displaysection').css('height', w );
@@ -113,8 +113,8 @@ $(function() {
     $('#clock').css('height', w );
     
     //just make w and h a tad smaller than window for UI look
-    w = 0.98 * w;
-    h= w;
+    w = 0.97 * w;
+    h = w;
 
     //timer
     svgT = d3.select('#timer').append('svg').attr('height', '100%').attr('width', '100%');
@@ -249,8 +249,8 @@ $(function() {
     svgT.append("path").attr('class', 'sector')
     .attr('transform', `translate(${w/2},${h/2})`)
     .attr("d", d3.arc()
-      .innerRadius( 50 )
-      .outerRadius( 0.45 * w )
+      .innerRadius( 40 )
+      .outerRadius( 0.44 * w )
       .startAngle( startA )     // It's in radians, 
       .endAngle( 0 )       
       )
@@ -262,7 +262,7 @@ $(function() {
 
     if      (period >= 36000) svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 45).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.4rem').style('font-weight', 'bold');
     else if (period >= 3600)  svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 45).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.6rem').style('font-weight', 'bold');
-    else                      svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 40).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '2.0rem').style('font-weight', 'bold');
+    else                      svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 38).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.8rem').style('font-weight', 'bold');
   }
 
   //display a flashing disc to indicate that time has run out
