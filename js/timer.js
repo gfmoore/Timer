@@ -16,6 +16,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.1   4  February 2021 Add date to clock and make clock first
 1.1.2   13 February 2021 Do some more work on resizing.
 1.1.3   14 February 2021 Add version display
+1.1.4   15 February 2021 Reduce font size slightly on counter
 
 */
 //#endregion 
@@ -194,6 +195,75 @@ $(function() {
     displayCountup();
   }
 
+  function displayClock() {
+    clockface();
+
+    d3.selectAll('.hands').remove();
+
+    //get current time and get hrs min sec
+    currentDate = new Date();
+    hrs = currentDate.getHours();
+    min = currentDate.getMinutes(); 
+    sec = currentDate.getSeconds();
+
+    day = currentDate.getDate();
+    mon = currentDate.getMonth() + 1;
+
+    //hour hand
+    if (hrs >= 12) hrs -= 12;
+    rot = Math.PI/2 - (hrs/12 * 2*Math.PI) - (min/60 * 2*Math.PI/12);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.6);
+    y2 = y(Math.sin(rot) * 0.6);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
+
+    //minute hand
+    rot = Math.PI/2 - (min/60 * 2*Math.PI) - (sec/60 * 2*Math.PI/60);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.80);
+    y2 = y(Math.sin(rot) * 0.80);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
+
+    //second hand
+    rot = Math.PI/2 - (sec/60 * 2*Math.PI);
+    x1 = x(0);
+    y1 = y(0);
+    x2 = x(Math.cos(rot) * 0.85);
+    y2 = y(Math.sin(rot) * 0.85);
+    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'red').attr('stroke-width', 2);
+  
+    //centre pivot (repeat after drawings hands really)
+    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', 4).attr('stroke', 'blue').attr('stroke-width', '1').attr('fill', 'blue');
+  }
+
+  function clockface() {
+    d3.selectAll('.clock').remove();
+
+    //clock face
+    x1 = x(0);
+    y1 = y(0);
+    //outer circle rim
+    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', w/2).attr('stroke', 'blue').attr('stroke-width', '2').attr('fill', 'none');
+
+    //add clock face ticks
+    for (let i=0; i<12; i += 1) {
+      rot = Math.PI/2 - i/12 * 2*Math.PI;  //add pi/2 to get to vertical for zero degrees/radians
+
+      x1 = x(0.86 * Math.cos(rot));
+      y1 = y(0.86 * Math.sin(rot));
+      x2 = x(0.95 * Math.cos(rot));
+      y2 = y(0.95 * Math.sin(rot));
+      svgC.append('line').attr('class', 'clock').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
+
+      //add day and month
+      svgC.append('text').text(day + ' ' + monthName(mon)).attr('class', 'clock').attr('x', w/2 -25).attr('y', 0.7 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.2rem').style('font-weight', 'bold');
+
+    }
+    
+  }  
+
   //display the timer
   function displayTime() {
 
@@ -296,7 +366,7 @@ $(function() {
              
     timeS = `${hrs}:${min}:${sec}`;
     svgS.selectAll('.stopw').remove();
-    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -58).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.75rem').style('font-weight', 'bold');
+    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -52).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.60rem').style('font-weight', 'bold');
   }
 
 
@@ -433,74 +503,6 @@ $(function() {
     reset();
   })
 
-  function displayClock() {
-    clockface();
-
-    d3.selectAll('.hands').remove();
-
-    //get current time and get hrs min sec
-    currentDate = new Date();
-    hrs = currentDate.getHours();
-    min = currentDate.getMinutes(); 
-    sec = currentDate.getSeconds();
-
-    day = currentDate.getDate();
-    mon = currentDate.getMonth() + 1;
-
-    //hour hand
-    if (hrs >= 12) hrs -= 12;
-    rot = Math.PI/2 - (hrs/12 * 2*Math.PI) - (min/60 * 2*Math.PI/12);
-    x1 = x(0);
-    y1 = y(0);
-    x2 = x(Math.cos(rot) * 0.6);
-    y2 = y(Math.sin(rot) * 0.6);
-    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
-
-    //minute hand
-    rot = Math.PI/2 - (min/60 * 2*Math.PI) - (sec/60 * 2*Math.PI/60);
-    x1 = x(0);
-    y1 = y(0);
-    x2 = x(Math.cos(rot) * 0.80);
-    y2 = y(Math.sin(rot) * 0.80);
-    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2);
-
-    //second hand
-    rot = Math.PI/2 - (sec/60 * 2*Math.PI);
-    x1 = x(0);
-    y1 = y(0);
-    x2 = x(Math.cos(rot) * 0.85);
-    y2 = y(Math.sin(rot) * 0.85);
-    svgC.append('line').attr('class', 'hands').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'red').attr('stroke-width', 2);
-  
-    //centre pivot (repeat after drawings hands really)
-    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', 4).attr('stroke', 'blue').attr('stroke-width', '1').attr('fill', 'blue');
-  }
-
-  function clockface() {
-    d3.selectAll('.clock').remove();
-
-    //clock face
-    x1 = x(0);
-    y1 = y(0);
-    //outer circle rim
-    svgC.append('circle').attr('class', 'clock').attr('cx', x1).attr('cy', y1).attr('r', w/2).attr('stroke', 'blue').attr('stroke-width', '2').attr('fill', 'none');
-
-    //add clock face ticks
-    for (let i=0; i<12; i += 1) {
-      rot = Math.PI/2 - i/12 * 2*Math.PI;  //add pi/2 to get to vertical for zero degrees/radians
-
-      x1 = x(0.86 * Math.cos(rot));
-      y1 = y(0.86 * Math.sin(rot));
-      x2 = x(0.95 * Math.cos(rot));
-      y2 = y(0.95 * Math.sin(rot));
-      svgC.append('line').attr('class', 'clock').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
-
-      //add day and month
-      svgC.append('text').text(day + ' ' + monthName(mon)).attr('class', 'clock').attr('x', w/2 -25).attr('y', 0.7 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.2rem').style('font-weight', 'bold');
-
-    }
-    
-  }
 
   //function click
   $('#main').on('click', function() {

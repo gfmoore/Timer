@@ -16,6 +16,7 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.1   4  February 2021 Add date to clock and make clock first
 1.1.2   13 February 2021 Do some more work on resizing.
 1.1.3   14 February 2021 Add version display
+1.1.4   15 February 2021 Reduce font size slightly on counter
 
 */
 //#endregion 
