@@ -17,11 +17,12 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.2   13 February 2021 Do some more work on resizing.
 1.1.3   14 February 2021 Add version display
 1.1.4   15 February 2021 Reduce font size slightly on counter
+1.1.5   25 March 2021 Remove leading zero in front of hours for counter
 
 */
 //#endregion 
 
-let version = '1.1.4';
+let version = '1.1.5';
 
 window.$ = window.jQuery = require('jquery');
 let d3 = require('d3');
@@ -362,11 +363,11 @@ $(function() {
     
     if (sec < 10) sec = '0' + sec;
     if (min < 10) min = '0' + min;
-    if (hrs < 10) hrs = '0' + hrs;
+    //if (hrs < 10) hrs = '0' + hrs;
              
     timeS = `${hrs}:${min}:${sec}`;
     svgS.selectAll('.stopw').remove();
-    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -52).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.60rem').style('font-weight', 'bold');
+    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -45).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.60rem').style('font-weight', 'bold');
   }
 
 

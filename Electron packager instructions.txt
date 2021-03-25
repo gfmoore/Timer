@@ -1,0 +1,9 @@
+electron-packager . --overwrite
+
+Don't forget to remove and copy to Program Files/Timer
+
+DO NOT LET GITHUB update with the electron folder there.
+
+If so you need to go into Github command line and do something like
+git log
+git rebase -i HEAD-2
