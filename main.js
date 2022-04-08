@@ -17,9 +17,10 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.2   13 February 2021 Do some more work on resizing.
 1.1.3   14 February 2021 Add version display
 1.1.4   15 February 2021 Reduce font size slightly on counter
+1.1.6   8 April 2022 Redo sizing of controls/display. Seem to have lost it?
 
 */
-//#endregion 
+//#endregion  
 
 // Modules
 const {app, BrowserWindow} = require('electron') 
@@ -52,6 +53,12 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: winState.width, height: winState.height, 
     x: winState.x, y: winState.y,
+
+    //if screen blows up too big goto C:\Users\Gordon\AppData\Roaming and delete/rename th timer folder
+    //this should then be recreated with defaults
+    // width: 100, height: 200, 
+    // x: 100, y: 200,
+    
     // frame: false,  //this stops divs responding to click events!!
     autoHideMenuBar: true, 
     titleBarStyle: 'hidden',

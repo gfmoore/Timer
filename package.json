@@ -17,6 +17,7 @@
   "license": "Gnu GPL v3.0",
   "devDependencies": {
     "electron": "^9.0.0",
+    "electron-packager": "^15.4.0",
     "nodemon": "^2.0.0"
   },
   "dependencies": {
@@ -35,5 +36,3 @@
     }
   }
 }
-
-

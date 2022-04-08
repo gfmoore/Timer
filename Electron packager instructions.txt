@@ -1,9 +1,11 @@
-electron-packager . --overwrite
+npx electron-packager . --overwrite
 
 Don't forget to remove and copy to Program Files/Timer
 
 DO NOT LET GITHUB update with the electron folder there.
+Get out of memory error as the folder is too big
 
-If so you need to go into Github command line and do something like
-git log
-git rebase -i HEAD-2
+If so you need to go into Github bash command line and do something like
+git status
+git reset HEAD~1 (or 2 or 3)
+
