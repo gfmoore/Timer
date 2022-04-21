@@ -19,10 +19,12 @@ Licence       GNU General Public Licence Version 3, 29 June 2007
 1.1.4   15 February 2021 Reduce font size slightly on counter
 1.1.5   25 March 2021 Remove leading zero in front of hours for counter
 1.1.6   8 April 2022 Redo sizing of controls/display. Seem to have lost it?
+1.1.7   20 April 2022 Try sizing again to allow small clock, timer etc, also max width, height added
+
 */
 //#endregion 
 
-let version = '1.1.6';
+let version = '1.1.7';
 
 window.$ = window.jQuery = require('jquery');
 let d3 = require('d3');
@@ -260,7 +262,7 @@ $(function() {
       svgC.append('line').attr('class', 'clock').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'darkgreen').attr('stroke-width', 2)
 
       //add day and month
-      svgC.append('text').text(day + ' ' + monthName(mon)).attr('class', 'clock').attr('x', w/2 -25).attr('y', 0.75 * h).attr('text-anchor', 'start').attr('fill', 'green').style('font-size', '1.15rem').style('font-weight', 'bold');
+      svgC.append('text').text(day + ' ' + monthName(mon)).attr('class', 'clock').attr('x', w/2 -22).attr('y', 0.80 * h).attr('text-anchor', 'start').attr('fill', 'green').style('font-size', '0.9rem').style('font-weight', 'bold');
 
     }
     
@@ -326,7 +328,7 @@ $(function() {
     svgT.append("path").attr('class', 'sector')
     .attr('transform', `translate(${w/2},${h/2})`)
     .attr("d", d3.arc()
-      .innerRadius( 37 )
+      .innerRadius( 32 )
       .outerRadius( 0.47 * w )
       .startAngle( startA )     // It's in radians, 
       .endAngle( 0 )       
@@ -337,9 +339,9 @@ $(function() {
     //text
     svgT.selectAll('.time').remove();
 
-    if      (period >= 36000) svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 35).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.1rem').style('font-weight', 'bold');
-    else if (period >= 3600)  svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 37).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.3rem').style('font-weight', 'bold');
-    else                      svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 30).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.5rem').style('font-weight', 'bold');
+    if      (period >= 36000) svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 30).attr('y', 0.50*h + 5).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '0.9rem').style('font-weight', 'bold');
+    else if (period >= 3600)  svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 30).attr('y', 0.50*h + 6).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.1rem').style('font-weight', 'bold');
+    else                      svgT.append('text').text(time).attr('class', 'time').attr('x', 0.5*w - 29).attr('y', 0.50*h + 10).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.4rem').style('font-weight', 'bold');
   }
 
   //display a flashing disc to indicate that time has run out
@@ -368,7 +370,7 @@ $(function() {
              
     timeS = `${hrs}:${min}:${sec}`;
     svgS.selectAll('.stopw').remove();
-    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 -40).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.40rem').style('font-weight', 'bold');
+    svgS.append('text').text(timeS).attr('class', 'stopw').attr('x', w/2 - 32).attr('y', 0.55 * h).attr('text-anchor', 'start').attr('fill', 'blue').style('font-size', '1.2rem').style('font-weight', 'bold');
   }
 
 

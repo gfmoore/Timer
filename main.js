@@ -46,12 +46,15 @@ function createWindow () {
 
   //so we can remember window state
   let winState = windowStateKeeper({
-    defaultWidth: 130, defaultHeight: 150
+    defaultWidth: 130, defaultHeight: 190
   })
 
   //Menu.setApplicationMenu(new Menu());
   mainWindow = new BrowserWindow({
-    width: winState.width, height: winState.height, 
+    width:  winState.width,
+    height: winState.height,
+    maxWidth: 400,
+    maxHeight: 400,
     x: winState.x, y: winState.y,
 
     //if screen blows up too big goto C:\Users\Gordon\AppData\Roaming and delete/rename th timer folder
